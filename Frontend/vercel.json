@@ -1,11 +1,11 @@
 {
     "rewrites": [
         {
-            "source": "/api/:path*",
+            "source": "/api/:match*",
             "destination": "https://one-store-5gql.onrender.com/api/:match*"
         },
         {
-            "source": "/(.*)",
+            "source": "/((?!api).*)",
             "destination": "/index.html"
         }
     ]
