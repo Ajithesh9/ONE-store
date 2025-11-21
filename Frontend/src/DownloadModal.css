@@ -1,0 +1,235 @@
+/* src/DownloadModal.css */
+
+/* --- OVERLAY --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000; /* Ensure it sits above everything */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* --- MODAL CONTAINER --- */
+.download-modal {
+  width: 100%;
+  max-width: 28rem;
+  background-color: #15171B; /* Matching Feature/Pricing Cards */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Add a subtle top glow */
+.download-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+/* --- HEADER --- */
+.download-modal-header {
+  padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.download-modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+}
+
+.download-modal-subtitle {
+  font-size: 0.9rem;
+  color: #9CA3AF;
+}
+
+.modal-close-button {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: #9CA3AF;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  transform: rotate(90deg);
+}
+
+/* --- CONTENT --- */
+.download-modal-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* --- OPTION CARDS --- */
+.download-option-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.download-option-card:hover {
+  transform: translateY(-2px);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Parent Card Specifics */
+.parent-card:hover {
+  border-color: rgba(187, 134, 252, 0.5); /* Purple Glow */
+  box-shadow: 0 8px 20px -5px rgba(187, 134, 252, 0.15);
+}
+
+/* Kids Card Specifics */
+.kids-card:hover {
+  border-color: rgba(3, 218, 198, 0.5); /* Teal Glow */
+  box-shadow: 0 8px 20px -5px rgba(3, 218, 198, 0.15);
+}
+
+/* Icons */
+.card-icon-wrapper {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.parent-icon {
+  background-color: rgba(187, 134, 252, 0.1);
+  color: #BB86FC;
+}
+
+.kids-icon {
+  background-color: rgba(3, 218, 198, 0.1);
+  color: #03DAC6;
+}
+
+/* Text */
+.card-text-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.card-desc {
+  font-size: 0.85rem;
+  color: #9CA3AF;
+}
+
+/* Action Arrow */
+.card-action-arrow {
+  color: #4B5563;
+  transition: all 0.3s ease;
+}
+
+.download-option-card:hover .card-action-arrow {
+  color: #FFFFFF;
+  transform: translateX(2px);
+}
+
+/* --- DIVIDER --- */
+.modal-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 0.25rem 0;
+}
+
+.modal-divider::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  z-index: 0;
+}
+
+.modal-divider span {
+  background-color: #15171B; /* Matches modal bg to hide line behind text */
+  padding: 0 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6B7280;
+  position: relative;
+  z-index: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* --- FOOTER --- */
+.download-modal-footer {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.download-modal-footer p {
+  font-size: 0.85rem;
+  color: #9CA3AF;
+  margin: 0;
+}
+
+.download-modal-footer a {
+  color: #BB86FC;
+  font-weight: 500;
+  margin-left: 0.25rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.download-modal-footer a:hover {
+  color: #D8B4FE;
+  text-decoration: underline;
+}

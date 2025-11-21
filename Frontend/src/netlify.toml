@@ -1,0 +1,13 @@
+# Netlify build configuration
+[build]
+  # This command is found in your package.json scripts
+  command = "npm run build"
+  
+  # This is the directory that Vite builds your files to
+  publish = "dist"
+
+# Redirect rule for Single Page Applications (SPAs)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

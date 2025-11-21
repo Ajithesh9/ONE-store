@@ -1,0 +1,33 @@
+/* src/BackToTopButton.css */
+
+.back-to-top-button {
+  @apply fixed bottom-6 right-6 z-50 
+         w-12 h-12 p-2.5 rounded-full 
+         flex items-center justify-center 
+         shadow-lg 
+         transition-all duration-300 ease-in-out;
+
+  /* Glassmorphic base style, matching your Navbar.css
+   
+  */
+  background-color: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  /* Icon color uses your primary brand color 
+   
+  */
+  color: #BB86FC;
+}
+
+.back-to-top-button:hover {
+  @apply scale-110 shadow-xl;
+
+  /* Hover effect matches your Pricing/Features tabs 
+   
+  */
+  background-color: #BB86FC;
+  color: #0C0E12; /* Dark background color for the icon */
+  border-color: #BB86FC;
+}

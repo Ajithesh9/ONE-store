@@ -1,0 +1,71 @@
+/* src/PrivacyPolicyPage.css */
+
+.privacy-page-container {
+  @apply bg-dark-background min-h-screen py-24 px-4;
+}
+
+.privacy-page-card {
+  @apply bg-[#0C0E12] border border-white/10 rounded-lg max-w-4xl mx-auto;
+}
+
+/* 1. NEW: This header is a simple container for the button */
+.privacy-page-header {
+  @apply w-full p-4 md:pt-6 md:px-6 md:pb-0;
+}
+
+/* 2. NEW: Styles for the relocated "Go Back" button */
+.privacy-page-back-button {
+  @apply text-sm font-semibold inline-flex items-center gap-2 
+         hover:text-white transition-colors;
+}
+
+/* Tab styling (copied from Features.css) */
+.privacy-page-tabs-wrapper {
+  /* 3. CHANGED: Padding is adjusted to fit the new layout */
+  @apply w-full max-w-full p-4 md:px-6 md:pb-4;
+}
+
+.privacy-page-tab-group {
+  @apply flex flex-col md:flex-row gap-1 p-1.5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10;
+}
+
+.privacy-page-tab-button {
+  @apply flex-1 py-2.5 px-2 text-sm font-semibold rounded-lg transition-all duration-200 text-center whitespace-nowrap;
+}
+/* End of tab styles */
+
+
+.privacy-page-content {
+  @apply p-6 md:p-8 text-dark-onSurfaceSecondary overflow-y-auto;
+}
+
+/* Copied from PrivacyModal.css */
+.privacy-page-last-updated {
+  @apply mb-6 text-sm;
+}
+
+.privacy-page-section-title {
+  @apply text-xl font-semibold text-white mb-2 transition-colors duration-300;
+}
+
+.privacy-page-paragraph {
+  @apply mb-4 text-gray-300;
+}
+
+.privacy-page-link {
+  @apply text-dark-primary;
+}
+.privacy-page-link:hover {
+  @apply underline;
+}
+
+.privacy-page-list {
+  @apply list-disc list-inside flex flex-col gap-2 mb-4 text-gray-300;
+}
+
+.privacy-page-contact-link {
+  @apply text-dark-primary ml-1;
+}
+.privacy-page-contact-link:hover {
+  @apply underline;
+}

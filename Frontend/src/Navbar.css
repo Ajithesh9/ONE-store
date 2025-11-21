@@ -1,0 +1,208 @@
+/* src/Navbar.css */
+
+/* --- POSITIONING --- */
+.navbar {
+  position: fixed;
+  top: 1rem;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+/* --- MAIN NAV CONTAINER (Floating Glass Pill) --- */
+.navbar-content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  
+  width: 100%;
+  max-width: 64rem;
+  padding: 0.5rem 0.75rem;
+  
+  border-radius: 9999px; /* Full pill shape */
+  
+  /* Light/Minimal Wireframe Style */
+  background-color: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.3);
+  
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* SCROLLED STATE */
+.navbar.solid .navbar-content-wrapper {
+  background-color: rgba(12, 14, 18, 0.8); /* Darker background when scrolling */
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* --- LOGO (Restored to Original Boxed Style) --- */
+.navbar-logo {
+  flex-shrink: 0;
+  background-color: rgba(40, 40, 40, 1); /* Dark box background */
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-image {
+  height: 20px;
+  width: 20px;
+  object-fit: contain;
+}
+
+/* --- DESKTOP MENU --- */
+.desktop-menu {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktop-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+}
+
+/* --- NAV LINKS (Pill Hover Effect) --- */
+.nav-link {
+  color: #9CA3AF; /* Neutral gray */
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.nav-link.active {
+  color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+}
+
+/* --- ACTIONS --- */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* CTA Button */
+.cta-button-desktop {
+  display: none;
+  background-color: #BB86FC;
+  color: #121212;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(187, 134, 252, 0.2);
+}
+
+.cta-button-desktop:hover {
+  background-color: #a26bfc;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(187, 134, 252, 0.3);
+}
+
+@media (min-width: 768px) {
+  .cta-button-desktop {
+    display: block;
+  }
+}
+
+/* --- MOBILE MENU BUTTON --- */
+.mobile-menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  color: #FFFFFF;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.mobile-menu-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 768px) {
+  .mobile-menu-button {
+    display: none;
+  }
+}
+
+.mobile-menu-icon {
+  font-size: 1.5rem;
+}
+
+/* --- MOBILE MENU DROPDOWN --- */
+.mobile-menu-container {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  background-color: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.mobile-nav-link {
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+  color: #D1D5DB;
+  font-weight: 500;
+  font-size: 1.1rem;
+  border-radius: 1rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.mobile-nav-link:hover, .mobile-nav-link.active {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #FFFFFF;
+}
+
+.mobile-cta-button {
+  margin-top: 1rem;
+  width: 100%;
+  background-color: #BB86FC;
+  color: #121212;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 1rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+}

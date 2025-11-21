@@ -1,0 +1,225 @@
+/* src/Features.css */
+
+/* --- SECTION BASE --- */
+.features-section {
+  @apply bg-dark-background py-20 relative overflow-hidden;
+  scroll-margin-top: 80px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.features-container {
+  @apply container mx-auto px-4 md:px-6 max-w-6xl;
+}
+
+/* --- HEADER --- */
+.features-header {
+  @apply text-center mb-10 max-w-2xl mx-auto;
+}
+
+.features-eyebrow {
+  @apply text-xs font-bold text-dark-primary mb-2 tracking-[0.15em] uppercase opacity-90;
+}
+
+.features-title {
+  @apply text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight;
+}
+
+.features-subtitle {
+  @apply text-base text-gray-400 font-normal leading-relaxed;
+}
+
+/* --- TABS (Matched to Pricing.css) --- */
+.features-tabs-wrapper {
+  @apply w-full max-w-4xl mx-auto mb-8;
+}
+
+.features-tab-group {
+  /* Matched Pricing: p-1.5, bg-white/5 */
+  @apply flex flex-wrap md:flex-nowrap gap-1 p-1.5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10;
+}
+
+.features-tab-button {
+  /* Matched Pricing: duration-200, font-semibold */
+  @apply flex-1 py-2.5 px-2 text-sm font-semibold rounded-lg transition-all duration-200 text-center whitespace-nowrap;
+}
+
+/* --- DISPLAY CARD --- */
+.features-card-wrapper {
+  @apply w-full max-w-5xl mx-auto relative;
+  height: 340px;
+  width: 850px;
+}
+
+.feature-display-card {
+  background-color: #15171B;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  @apply w-full h-auto rounded-2xl flex flex-col md:flex-row p-1 gap-1;
+  height: 340px;
+  width: 850px;
+}
+
+/* --- LEFT: VISUAL (MOCKUP) --- */
+.feature-card-visual {
+  @apply w-full md:w-5/12 bg-[#0f1115] relative flex items-center justify-center p-0 overflow-hidden rounded-xl;
+}
+
+.visual-content {
+  @apply relative w-full max-w-[260px] flex items-center justify-center z-10;
+}
+
+.visual-image {
+  @apply w-[85%] h-auto object-contain drop-shadow-2xl relative z-10;
+}
+
+.visual-glow {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] rounded-full blur-[60px] opacity-20;
+  z-index: 0;
+}
+
+/* --- RIGHT: CONTENT LIST --- */
+.feature-card-content {
+  @apply w-full md:w-7/12 p-4 flex flex-col justify-center;
+}
+
+/* Header Fixed Area */
+.content-header-fixed {
+  @apply mb-6 border-b border-white/5 pb-4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content-title {
+  @apply text-2xl md:text-3xl font-bold mb-2 tracking-tight;
+}
+
+.content-desc {
+  @apply text-slate-400 text-sm leading-relaxed max-w-md;
+}
+
+/* Grid Wrapper */
+.features-grid-wrapper {
+  @apply flex-1;
+}
+
+.features-grid-list {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2;
+}
+
+/* --- CLEANER LIST ITEMS --- */
+.grid-item {
+  @apply flex items-center gap-3 py-2 px-1 rounded-lg transition-colors duration-200 hover:bg-white/5;
+}
+
+.grid-icon-box {
+  @apply flex-shrink-0;
+}
+
+.grid-text {
+  @apply text-sm font-medium text-gray-300 leading-none;
+}
+
+/* Default Visibility (Desktop) */
+.mobile-visual {
+  display: none !important;
+}
+
+.desktop-visual {
+  display: flex !important;
+}
+
+.mobile-card-wrapper {
+  display: contents; /* Acts like it doesn't exist on desktop grid/flex */
+}
+
+
+/* ========================================================================
+   MOBILE OPTIMIZATION (Max-width: 900px to cover the 850px fixed width)
+   ======================================================================== */
+@media (max-width: 900px) {
+  /* 1. Fix Card & Content Overflow */
+  .features-card-wrapper {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  
+  /* Remove card styling from the main wrapper on mobile */
+  .feature-display-card {
+    width: 100% !important;
+    height: auto !important;
+    flex-direction: column;
+    background-color: transparent; /* Transparent background */
+    border: none; /* No border */
+    padding: 0;
+    gap: 1rem; /* Spacing between Mobile Card and Grid */
+  }
+
+  .feature-card-content {
+    width: 100% !important;
+    padding: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* 2. Create the "Mobile Card" (Image + Header) */
+  .mobile-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: #15171B; /* The Desktop Card BG */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    padding: 0.5rem; /* Padding around image */
+    overflow: hidden;
+  }
+
+  /* 3. Mobile Visual (1:1 Ratio, Above Title) */
+  .desktop-visual {
+    display: none !important;
+  }
+
+  .mobile-visual {
+    display: flex !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1; /* 1:1 Ratio */
+    background-color: #0f1115; /* Inner visual bg */
+    border-radius: 0.75rem; /* Inner radius */
+    margin-bottom: 1.5rem;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .content-header-fixed {
+    border-bottom: none; /* Remove separator inside mobile card */
+    margin-bottom: 0;
+    padding: 0 1rem 1.5rem 1rem; /* Add padding for text inside card */
+    text-align: center; /* Center align text for mobile card feel */
+  }
+
+  /* 4. Fix Grid Item Overflow & Remove Hover */
+  .features-grid-list {
+    grid-template-columns: 1fr !important; /* Force single column */
+    gap: 0.5rem;
+  }
+
+  .grid-item {
+    pointer-events: none; /* Disables hover interactions completely */
+    background-color: rgba(255,255,255,0.03); /* Static background */
+    padding: 1rem;
+    justify-content: flex-start;
+  }
+  
+  .grid-item:hover {
+    background-color: rgba(255,255,255,0.03) !important;
+  }
+  
+  /* Adjust Text for Mobile */
+  .content-title {
+    font-size: 1.5rem;
+  }
+  
+  .content-desc {
+    font-size: 0.95rem;
+  }
+}

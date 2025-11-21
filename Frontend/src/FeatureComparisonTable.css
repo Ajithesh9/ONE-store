@@ -1,0 +1,141 @@
+.feature-comparison-table {
+  margin-top: 6rem;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feature-comparison-table h3 {
+  font-size: 2rem;
+  line-height: 2.25rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.feature-comparison-table .table-container {
+  background-color: #1e1e1e;
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .feature-comparison-table .table-container {
+    padding: 1rem;
+  }
+}
+
+.feature-comparison-table .table-header {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.5rem;
+  font-weight: 700;
+  color: #aaaaaa;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.75rem 1rem;
+}
+
+@media (min-width: 768px) {
+  .feature-comparison-table .table-header {
+    gap: 1rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
+.feature-comparison-table .table-header .feature-col {
+  grid-column: span 2 / span 2;
+}
+
+.feature-comparison-table .table-header .plan-col {
+  text-align: center;
+}
+
+.feature-comparison-table .table-body .category-row {
+  margin-bottom: 1rem;
+}
+
+.feature-comparison-table .table-body .category-header {
+  padding: 0.5rem 1rem;
+}
+
+.feature-comparison-table .table-body .category-header h4 {
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  color: #ffffff;
+}
+
+.feature-comparison-table .table-body .feature-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0.375rem;
+}
+
+.feature-comparison-table .table-body .feature-row:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+@media (min-width: 768px) {
+  .feature-comparison-table .table-body .feature-row {
+    gap: 1rem;
+  }
+}
+
+.feature-comparison-table .table-body .feature-name {
+  grid-column: span 2 / span 2;
+  color: #aaaaaa;
+}
+
+.feature-comparison-table .table-body .plan-cell {
+  display: flex;
+  justify-content: center;
+}
+
+.feature-comparison-table .table-body .check-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #03dac6;
+}
+
+.feature-comparison-table .table-body .x-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.feature-comparison-table .manual-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-weight: 700;
+  border-radius: 0.375rem;
+}
+
+.feature-comparison-table .manual-row:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+@media (min-width: 768px) {
+  .feature-comparison-table .manual-row {
+    gap: 1rem;
+  }
+}
+
+.feature-comparison-table .manual-row .max-devices-label {
+  grid-column: span 2 / span 2;
+  color: #aaaaaa;
+}
+
+.feature-comparison-table .manual-row .device-count {
+  text-align: center;
+  color: #ffffff;
+}

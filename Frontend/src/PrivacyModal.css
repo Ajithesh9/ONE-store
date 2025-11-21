@@ -1,0 +1,94 @@
+.privacy-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.privacy-modal {
+  background-color: #0C0E12; /* Updated from #1e1e1e */
+  border-radius: 0.75rem;
+  width: 100%;
+  max-width: 56rem;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.privacy-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.privacy-modal-title {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.privacy-modal-close-button {
+  color: #aaaaaa;
+}
+
+.privacy-modal-close-button:hover {
+  color: #bb86fc;
+}
+
+.privacy-modal-content {
+  padding: 2rem;
+  color: #aaaaaa;
+  overflow-y: auto;
+}
+
+.privacy-modal-last-updated {
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.privacy-modal-section-title {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.privacy-modal-paragraph {
+  margin-bottom: 1rem;
+}
+
+.privacy-modal-link {
+  color: #bb86fc;
+  padding-right: 0.25rem;
+}
+
+.privacy-modal-link:hover {
+  text-decoration: underline;
+}
+
+.privacy-modal-list {
+  list-style-type: disc;
+  list-style-position: inside;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.privacy-modal-contact-link {
+  color: #bb86fc;
+  padding-left: 0.25rem;
+}
+
+.privacy-modal-contact-link:hover {
+  text-decoration: underline;
+}
