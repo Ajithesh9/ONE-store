@@ -6,23 +6,22 @@ import { useAuth } from '../context/AuthContext';
 import CheckoutForm from '../components/CheckoutForm';
 import { useNavigate } from 'react-router-dom';
 
-// Initialize Stripe outside render to avoid recreation
+// Load Stripe Key
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 const Payment = () => {
-    const { cartItems, clearCart } = useCart();
+    const { cartItems } = useCart();
     const { user } = useAuth();
     const [clientSecret, setClientSecret] = useState("");
+    const [error, setError] = useState(null); // NEW: State for errors
     const navigate = useNavigate();
 
-    // Calculate total amount
     const totalAmount = cartItems.reduce((acc, item) => acc + parseFloat(item.price), 0);
 
     useEffect(() => {
         if (!user) navigate('/login');
         if (cartItems.length === 0) navigate('/cart');
 
-        // Create PaymentIntent on Backend
         if (totalAmount > 0) {
             fetch("/api/payment/create-payment-intent", {
                 method: "POST",
@@ -32,15 +31,24 @@ const Payment = () => {
                 },
                 body: JSON.stringify({ amount: totalAmount }),
             })
-                .then((res) => res.json())
+                .then(async (res) => {
+                    if (!res.ok) {
+                        const text = await res.text();
+                        throw new Error(`Server Error: ${text}`);
+                    }
+                    return res.json();
+                })
                 .then((data) => setClientSecret(data.clientSecret))
-                .catch((err) => console.error("Error creating payment intent:", err));
+                .catch((err) => {
+                    console.error("Payment Setup Error:", err);
+                    setError(err.message); // NEW: Show error on screen
+                });
         }
     }, [cartItems, user, totalAmount, navigate]);
 
     const options = {
         clientSecret,
-        theme: 'night', // Matches your dark theme
+        theme: 'night',
         appearance: {
             theme: 'night',
             variables: {
@@ -62,10 +70,21 @@ const Payment = () => {
                         <p className="text-3xl font-bold text-white">₹{totalAmount.toFixed(2)}</p>
                     </div>
 
+                    {/* SHOW ERROR IF ANY */}
+                    {error && (
+                        <div className="bg-red-500/10 border border-red-500 text-red-500 p-4 rounded mb-4 text-sm">
+                            <strong>Error loading payment:</strong> {error}
+                        </div>
+                    )}
+
                     {clientSecret && (
                         <Elements options={options} stripe={stripePromise}>
-                            <CheckoutForm amount={totalAmount} clearCart={clearCart} />
+                            <CheckoutForm amount={totalAmount} />
                         </Elements>
+                    )}
+
+                    {!clientSecret && !error && (
+                        <p className="text-center text-gray-500 animate-pulse">Connecting to secure server...</p>
                     )}
                 </div>
             </div>
