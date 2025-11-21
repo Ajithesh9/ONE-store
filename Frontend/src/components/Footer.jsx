@@ -1,17 +1,21 @@
 // src/components/Footer.jsx
 
 import React from 'react';
-// We no longer need 'Link' from react-router-dom
+import { useLocation } from 'react-router-dom'; // 1. Import useLocation
 import PreFooterCTA from './PreFooterCTA';
 import { Facebook, Twitter, Instagram, Linkedin, Mail } from 'lucide-react';
 import eyesLogo from '../assets/eyes.webp';
 
-// The 'onPrivacyClick' prop has been removed
 const Footer = () => {
+  const location = useLocation(); // 2. Get current route
+
+  // 3. Define routes where CTA should be hidden (User Dashboard & Admin)
+  const hideCTA = location.pathname === '/dashboard' || location.pathname === '/admin';
+
   return (
     <div className="relative w-full">
-      {/* The Pre-Footer CTA Section */}
-      <PreFooterCTA />
+      {/* 4. Conditionally render the Pre-Footer CTA */}
+      {!hideCTA && <PreFooterCTA />}
 
       {/* ==========================================
           SECTION 2: ACTUAL FOOTER (Dark Background) 
@@ -51,11 +55,11 @@ const Footer = () => {
               <ul className="space-y-3 text-slate-400 text-sm">
                 <li><a href="/#features" className="hover:text-white transition-colors">Features</a></li>
                 <li><a href="/#pricing" className="hover:text-white transition-colors">Pricing</a></li>
-                
+
                 {/* This link now points to the page (no target="_blank") */}
                 <li>
-                  <a 
-                    href="/privacypolicy" 
+                  <a
+                    href="/privacypolicy"
                     className="hover:text-white transition-colors"
                   >
                     Privacy Policy
@@ -94,7 +98,7 @@ const Footer = () => {
           <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-slate-500 text-sm">© 2025 Watcher Inc. All rights reserved.</p>
             <div className="flex gap-6 text-slate-500 text-sm">
-              
+
               {/* This link also points to the page (no target="_blank") */}
               <a href="/privacypolicy" className="hover:text-white transition-colors">Privacy Policy</a>
               <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
