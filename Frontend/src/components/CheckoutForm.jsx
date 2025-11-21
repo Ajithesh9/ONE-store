@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContext'; // Import Cart
-import { useAuth } from '../context/AuthContext'; // Import Auth
+import { useCart } from '../context/CartContext'; // 1. Import Cart Context
+import { useAuth } from '../context/AuthContext'; // 2. Import Auth Context
 
 const CheckoutForm = ({ amount, clearCart }) => {
     const stripe = useStripe();
     const elements = useElements();
-    const { cartItems } = useCart(); // Get the actual items
-    const { user } = useAuth(); // Get user token
+    const { cartItems } = useCart(); // Get actual items from cart
+    const { user } = useAuth();      // Get logged-in user info
 
     const [message, setMessage] = useState(null);
     const [isProcessing, setIsProcessing] = useState(false);
@@ -17,79 +17,110 @@ const CheckoutForm = ({ amount, clearCart }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!stripe || !elements) return;
+        if (!stripe || !elements) {
+            // Stripe.js has not yet loaded.
+            return;
+        }
 
         setIsProcessing(true);
 
-        // 1. Confirm Payment with Stripe
+        // ---------------------------------------------------------
+        // STEP 1: Confirm Payment with Stripe
+        // ---------------------------------------------------------
         const { error, paymentIntent } = await stripe.confirmPayment({
             elements,
             confirmParams: {
+                // Return URL is fallback for some payment methods (like iDEAL)
                 return_url: `${window.location.origin}/dashboard`,
             },
-            redirect: "if_required",
+            redirect: "if_required", // We handle the redirect manually for cards
         });
 
         if (error) {
+            // Payment Failed
+            console.error("Stripe Payment Error:", error);
             setMessage(error.message);
             setIsProcessing(false);
-        } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        }
+        else if (paymentIntent && paymentIntent.status === 'succeeded') {
 
-            // 2. PAYMENT SUCCESS! Now Save Order to Database
+            // ---------------------------------------------------------
+            // STEP 2: Payment Success! Now Save Order to Database
+            // ---------------------------------------------------------
             try {
                 const orderData = {
                     orderItems: cartItems.map(item => ({
                         name: item.name,
-                        price: item.price,
-                        product: item.id,
-                        image: "", // Optional: Add plan image URL if you have one
+                        price: Number(item.price), // Ensure Number
+                        product: item.id,          // The Plan ID (e.g. 'gold')
+                        image: "",                 // Optional image URL
                     })),
                     paymentMethod: "Card",
-                    itemsPrice: amount,
+                    itemsPrice: Number(amount),    // Ensure Number
                     taxPrice: 0,
-                    totalPrice: amount,
+                    totalPrice: Number(amount),    // Ensure Number
+                    isPaid: true,
+                    paidAt: new Date().toISOString(),
                 };
 
                 const res = await fetch('/api/orders', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${user.token}`
+                        'Authorization': `Bearer ${user.token}` // Auth Token
                     },
                     body: JSON.stringify(orderData)
                 });
 
+                const data = await res.json();
+
                 if (res.ok) {
+                    // Success: Clear UI and Redirect
                     setMessage("Payment & Order Successful!");
-                    clearCart();
-                    setTimeout(() => navigate('/dashboard'), 2000);
+                    if (clearCart) clearCart(); // Clear the global cart state
+
+                    // Wait 2 seconds so user sees success message, then go to dashboard
+                    setTimeout(() => {
+                        navigate('/dashboard');
+                    }, 2000);
                 } else {
-                    setMessage("Payment successful, but order save failed. Contact support.");
+                    // Backend Rejected the Order
+                    console.error("Order Save Failed:", data);
+                    setMessage(`Payment succeeded, but order saving failed: ${data.message}`);
                 }
 
             } catch (err) {
-                console.error("Order Save Error:", err);
-                setMessage("Critical error saving order.");
+                console.error("Network Error Saving Order:", err);
+                setMessage(`Critical Error: ${err.message}`);
             }
 
             setIsProcessing(false);
         } else {
-            setMessage("Something went wrong.");
+            // Catch-all for other statuses (processing, requires_action, etc.)
+            setMessage("Payment status: " + (paymentIntent ? paymentIntent.status : "Unknown"));
             setIsProcessing(false);
         }
     };
 
     return (
         <form onSubmit={handleSubmit} className="mt-6">
+            {/* Stripe's Secure UI Element */}
             <PaymentElement />
+
             <button
                 disabled={isProcessing || !stripe || !elements}
                 id="submit"
-                className="w-full mt-6 bg-[#03DAC6] text-black font-bold py-3 rounded hover:bg-[#02b3a2] transition disabled:opacity-50"
+                className="w-full mt-6 bg-[#03DAC6] text-black font-bold py-3 rounded hover:bg-[#02b3a2] transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-                {isProcessing ? "Processing..." : `Pay ₹${amount.toFixed(2)}`}
+                {isProcessing ? "Processing Payment..." : `Pay ₹${amount.toFixed(2)}`}
             </button>
-            {message && <div className="mt-4 text-center font-semibold text-[#BB86FC]">{message}</div>}
+
+            {/* Status Message Area */}
+            {message && (
+                <div className={`mt-4 text-center font-medium p-3 rounded ${message.includes("Successful") ? "bg-green-500/10 text-green-400" : "bg-red-500/10 text-red-400"}`}>
+                    {message}
+                </div>
+            )}
         </form>
     );
 };
