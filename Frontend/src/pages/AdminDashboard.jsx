@@ -6,12 +6,17 @@ import { DollarSign, ShoppingBag, Users, TrendingUp } from 'lucide-react';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
-    const { user, logout } = useAuth();
+    // 1. Get 'loading' from AuthContext
+    const { user, logout, loading: authLoading } = useAuth();
     const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [dataLoading, setDataLoading] = useState(true);
 
     useEffect(() => {
+        // 2. If auth is still loading, do nothing yet
+        if (authLoading) return;
+
+        // 3. Now we know auth is done. If no user or not admin, redirect.
         if (!user || !user.isAdmin) {
             navigate('/dashboard');
             return;
@@ -27,17 +32,18 @@ const AdminDashboard = () => {
             } catch (error) {
                 console.error("Admin Load Error:", error);
             } finally {
-                setLoading(false);
+                setDataLoading(false);
             }
         };
         fetchAllOrders();
-    }, [user, navigate]);
+    }, [user, authLoading, navigate]); // Added authLoading dependency
 
     const totalRevenue = orders.reduce((acc, order) => acc + order.totalPrice, 0);
     const totalOrders = orders.length;
     const uniqueCustomers = new Set(orders.map(o => o.user?._id)).size;
 
-    if (loading) return <div className="min-h-screen bg-[#0C0E12] flex items-center justify-center text-white">Loading Admin Panel...</div>;
+    // 4. Show loading state if either Auth or Data is loading
+    if (authLoading || dataLoading) return <div className="min-h-screen bg-[#0C0E12] flex items-center justify-center text-white">Loading Admin Panel...</div>;
 
     return (
         <div className="admin-page">

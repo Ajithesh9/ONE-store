@@ -5,12 +5,17 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    // 1. Initialize loading to true so the app waits before redirecting
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     // Check if user is already logged in (on page refresh)
     useEffect(() => {
         const userInfo = JSON.parse(localStorage.getItem('userInfo'));
         setUser(userInfo);
+
+        // 2. We have checked storage, so we are done loading
+        setLoading(false);
     }, [navigate]);
 
     // Login Function
@@ -63,7 +68,8 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, register, logout }}>
+        // 3. Pass 'loading' to the provider so pages can use it
+        <AuthContext.Provider value={{ user, loading, login, register, logout }}>
             {children}
         </AuthContext.Provider>
     );
